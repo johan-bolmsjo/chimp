@@ -1,0 +1,72 @@
+dx: 216 mm
+dy: 137 mm
+
+Wacom Bamboo 16FG 6x8 Pen: (event13)
+
+00000 00000 0      // EV_SYN, SYN_REPORT
+00001 00320 1      // EV_KEY, BTN_TOOL_PEN    (pen near tablet)
+00001 00321 1      // EV_KEY, BTN_TOOL_RUBBER (rubber near tablet)
+00001 00330 1      // EV_KEY, BTN_TOUCH       (tool touch tablet)
+00001 00331 1      // EV_KEY, BTN_STYLUS
+00001 00332 1      // EV_KEY, BTN_STYLUS2
+00003 00000 7600   // EV_ABS, ABS_X, offset   (0 .. 21648)
+00003 00001 10128  // EV_ABS, ABS_Y, offset   (0 .. 13700)
+00003 00024 130    // EV_ABS, ABS_PRESSURE, pressure (0 .. 1023)
+00003 00025 11     // EV_ABS, ABS_DISTANCE, distance (0 .. ~30)
+
+Wacom Bamboo 16FG 6x8 Finger: (event14)
+
+00000 00000 0      // EV_SYN, SYN_REPORT
+00001 00325 0      // EV_KEY, BTN_TOOL_FINGER
+00001 00330 0      // EV_KEY, BTN_TOUCH
+00003 00000 1275   // EV_ABS, ABS_X, offset  (0 .. 4095)
+00003 00001 2014   // EV_ABS, ABS_Y, offset  (0 .. 4095)
+00003 00048 144    // EV_ABS, ABS_MT_TOUCH_MAJOR
+00003 00049 322    // EV_ABS, ABS_MT_TOUCH_MINOR
+00003 00053 1275   // EV_ABS, ABS_MT_POSITION_X
+00003 00054 1938   // EV_ABS, ABS_MT_POSITION_Y
+00003 00057 65     // EV_ABS, ABS_MT_TRACKING_ID
+
+Wacom Bamboo 16FG 6x8 Pad: (event15)
+
+00001 00272 0      // EV_KEY, BTN_LEFT    (button 1)
+00001 00273 0      // EV_KEY, BTN_RIGHT   (button 4)
+00001 00277 0      // EV_KEY, BTN_FORWARD (button 2)
+00001 00278 0      // EV_KEY, BTN_BACK    (button 3)
+
+
+* SYN_REPORT:
+  - Used to synchronize and separate events into packets of input data changes
+    occurring at the same moment in time. For example, motion of a mouse may set
+    the REL_X and REL_Y values for one motion, then emit a SYN_REPORT. The next
+    motion will emit more REL_X and REL_Y values and send another SYN_REPORT.
+
+* SYN_DROPPED:
+  - Used to indicate buffer overrun in the evdev client's event queue.
+    Client should ignore all events up to and including next SYN_REPORT
+    event and query the device (using EVIOCG* ioctls) to obtain its
+    current state.
+
+
+// "/dev/input/event13" "Wacom Bamboo 16FG 6x8 Pen" "usb-0000:00:1a.0-1.4/input0"
+// "/dev/input/event14" "Wacom Bamboo 16FG 6x8 Finger" "usb-0000:00:1a.0-1.4/input1"
+// "/dev/input/event15" "Wacom Bamboo 16FG 6x8 Pad" "usb-0000:00:1a.0-1.4/input1"
+
+        devices, _ := evdev.ListInputDevices()
+
+        for _, dev := range devices {
+                fmt.Printf("%q %q %q\n", dev.Fn, dev.Name, dev.Phys)
+        }
+
+
+### Disconnect Tablet from X Windows
+
+xinput list
+xinput float id
+
+Example:
+
+xinput float 15
+xinput float 16
+xinput float 17
+xinput float 18
