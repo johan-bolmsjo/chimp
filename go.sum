@@ -1,0 +1,4 @@
+github.com/johan-bolmsjo/golang-evdev v1.0.0 h1:rly8Cuz3Gb4sotqoiv3lOsD9IwIr5oIhmxQ0zsiHVBE=
+github.com/johan-bolmsjo/golang-evdev v1.0.0/go.mod h1:REilzyPfhAQSg+1W0KmyDCbL2hUAs6fJQacw2Gbq8Vg=
+github.com/npat-efault/poller v2.0.0+incompatible h1:jtTdXWKgN5kDK41ts8hoY1rvTEi0K08MTB8/bRO9MqE=
+github.com/npat-efault/poller v2.0.0+incompatible/go.mod h1:lni01B89P8PtVpwlAhdhK1niN5rPkDGGpGGgBJzpSgo=
